@@ -11,8 +11,9 @@ import CardHeader from "@mui/material/CardHeader";
 
 export default function InsetDividers() {
   return (
-    <Card sx={{ marginBottom: 5 }}>
+    <Card sx={{ marginBottom: 3 }}>
       <CardHeader title="Aniversariantes do dia" />
+      <Divider variant="fullWidth" />
       <CardContent>
         <List
           sx={{
