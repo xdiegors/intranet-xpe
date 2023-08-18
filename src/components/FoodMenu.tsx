@@ -17,7 +17,7 @@ interface Column {
 
 const columns: Column[] = [
   { id: "name", label: "Categoria", minWidth: 170 },
-  { id: "code", label: "Nome", minWidth: 100 },
+  { id: "code", label: "Prato", minWidth: 100 },
 ];
 
 interface Data {
@@ -30,10 +30,10 @@ function createData(name: string, code: string): Data {
 }
 
 const rows = [
-  createData("Prato Principal", "Carne com Mandioca"),
-  createData("Prato Principal", "Hamburguer"),
-  createData("Guarnição", "Farofa"),
-  createData("Guarnição", "Sopa de tomate"),
+  createData("Prato Principal 1", "Carne com Mandioca"),
+  createData("Prato Principal 2", "Hamburguer"),
+  createData("Guarnição 1", "Farofa"),
+  createData("Guarnição 2", "Sopa de tomate"),
 ];
 
 export default function FoodMenu() {
@@ -46,7 +46,11 @@ export default function FoodMenu() {
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
-              <TableCell align="center" colSpan={2}>
+              <TableCell
+                align="center"
+                colSpan={2}
+                sx={{ backgroundColor: "black", color: "white" }}
+              >
                 Cardápio
               </TableCell>
             </TableRow>

@@ -29,15 +29,15 @@ function createData(name: string, code: string): Data {
 }
 
 const rows = [
-  createData("Diego Ribeiro", "TI"),
-  createData("Francisco Antônio", "Engenharia"),
-  createData("Roberto Baena", "Tapeçaria"),
-  createData("Wilton Mendes", "PCP"),
+  createData("Palestra sobre vida saudável", "26/08/2023"),
+  createData("Apresentação dos resultados da empresa", "15/09/2023"),
+  createData("Evento de dia das crianças", "12/10/2023"),
+  createData("Palestra sobre finanças pessoais", "18/11/2023"),
 ];
 
-export default function Birthdays() {
+export default function Events() {
   return (
-    <Paper sx={{ width: "100%", marginBottom: 3 }}>
+    <Paper sx={{ maxWidth: 340, marginBottom: 3 }}>
       <TableContainer>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
@@ -47,7 +47,7 @@ export default function Birthdays() {
                 colSpan={2}
                 sx={{ backgroundColor: "black", color: "white" }}
               >
-                Aniversariantes do dia
+                Próximos eventos
               </TableCell>
             </TableRow>
           </TableHead>

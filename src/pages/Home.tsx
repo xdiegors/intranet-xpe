@@ -2,7 +2,6 @@ import Menu from "../components/Menu";
 import SearchBar from "../components/SearchBar";
 import Box from "@mui/material/Box";
 
-import Grid from "@mui/material/Grid";
 import Calendar from "../components/Calendar";
 import News from "../components/News";
 import Birthdays from "../components/Birthdays";
@@ -11,6 +10,7 @@ import FoodMenu from "../components/FoodMenu";
 import { brown } from "@mui/material/colors";
 import Footer from "../components/Footer";
 import Container from "@mui/material/Container";
+import Events from "../components/Events";
 
 export default function Home() {
   return (
@@ -51,7 +51,7 @@ export default function Home() {
           <News />
         </Box>
         <Box>
-          <Calendar />
+          <Events />
           <Birthdays />
           <FoodMenu />
         </Box>
