@@ -2,7 +2,6 @@ import Menu from "../components/Menu";
 import SearchBar from "../components/SearchBar";
 import Box from "@mui/material/Box";
 
-import Calendar from "../components/Calendar";
 import News from "../components/News";
 import Birthdays from "../components/Birthdays";
 import FoodMenu from "../components/FoodMenu";
