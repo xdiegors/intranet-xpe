@@ -19,11 +19,8 @@ function Copyright(props: any) {
       align="center"
       {...props}
     >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
+      <Link color="inherit" href="https://mui.com/"></Link> &copy; DRS Móveis -
+      2023
       {"."}
     </Typography>
   );
