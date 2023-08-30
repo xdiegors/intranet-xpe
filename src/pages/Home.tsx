@@ -46,8 +46,6 @@ export default function Home() {
       >
         <Box maxWidth={790}>
           <News />
-          <News />
-          <News />
         </Box>
         <Box>
           <Events />

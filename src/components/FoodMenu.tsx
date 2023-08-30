@@ -6,42 +6,38 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import { useEffect, useState } from "react";
 
-interface Column {
-  id: "name" | "code" | "population" | "size" | "density";
-  label: string;
-  minWidth?: number;
-  align?: "right";
-  format?: (value: number) => string;
+interface Food {
+  _id: string;
+  dish1: string;
+  dish2: string;
+  garnish1: string;
+  garnish2: string;
+  date: string;
 }
-
-const columns: Column[] = [
-  { id: "name", label: "Categoria", minWidth: 170 },
-  { id: "code", label: "Prato", minWidth: 100 },
-];
-
-interface Data {
-  name: string;
-  code: string;
-}
-
-function createData(name: string, code: string): Data {
-  return { name, code };
-}
-
-const rows = [
-  createData("Prato Principal 1", "Carne com Mandioca"),
-  createData("Prato Principal 2", "Hamburguer"),
-  createData("Guarnição 1", "Farofa"),
-  createData("Guarnição 2", "Sopa de tomate"),
-];
 
 export default function FoodMenu() {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [foodData, setFoodData] = useState<Food>();
+
+  useEffect(() => {
+    // Basic Authentication credentials
+    const username = "admin";
+    const password = "desafio";
+
+    // Fetch data from the API with Basic Authentication
+    fetch("http://localhost:3000/food", {
+      headers: new Headers({
+        Authorization: `Basic ${btoa(`${username}:${password}`)}`,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => setFoodData(data[0])) // Fetching the first item from the array
+      .catch((error) => console.error("Error fetching data:", error));
+  }, []);
 
   return (
-    <Paper sx={{ width: "100%" }}>
+    <Paper sx={{ maxWidth: 340, marginBottom: 3 }}>
       <TableContainer>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
@@ -51,40 +47,28 @@ export default function FoodMenu() {
                 colSpan={2}
                 sx={{ backgroundColor: "black", color: "white" }}
               >
-                Cardápio
+                Cardápio do Dia
               </TableCell>
             </TableRow>
-            <TableRow>
-              {columns.map((column) => (
-                <TableCell
-                  key={column.id}
-                  align={column.align}
-                  style={{ top: 57, minWidth: column.minWidth }}
-                >
-                  {column.label}
-                </TableCell>
-              ))}
-            </TableRow>
           </TableHead>
+
           <TableBody>
-            {rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                    {columns.map((column) => {
-                      const value = row[column.id];
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                          {column.format && typeof value === "number"
-                            ? column.format(value)
-                            : value}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })}
+            <TableRow hover role="checkbox" tabIndex={-1}>
+              <TableCell>Prato Principal 1</TableCell>
+              <TableCell>{foodData?.dish1}</TableCell>
+            </TableRow>
+            <TableRow hover role="checkbox" tabIndex={-1}>
+              <TableCell>Prato Principal 2</TableCell>
+              <TableCell>{foodData?.dish2}</TableCell>
+            </TableRow>
+            <TableRow hover role="checkbox" tabIndex={-1}>
+              <TableCell>Guarnição 1</TableCell>
+              <TableCell>{foodData?.garnish1}</TableCell>
+            </TableRow>
+            <TableRow hover role="checkbox" tabIndex={-1}>
+              <TableCell>Guarnição 2</TableCell>
+              <TableCell>{foodData?.garnish2}</TableCell>
+            </TableRow>
           </TableBody>
         </Table>
       </TableContainer>
