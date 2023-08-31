@@ -15,7 +15,7 @@ interface News {
 }
 
 export default function News() {
-  const [newsData, setNewsData] = useState([]);
+  const [newsData, setNewsData] = useState(Array<News>);
 
   useEffect(() => {
     // Basic Authentication credentials
@@ -33,39 +33,31 @@ export default function News() {
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
-  return (
-    <div>
-      {newsData.map((item: News) => (
-        <Card key={item.id} sx={{ maxWidth: 900, marginBottom: 3 }}>
-          <CardHeader
-            avatar={
-              <Avatar sx={{ bgcolor: red[500] }} aria-label="user">
-                D
-              </Avatar>
-            }
-            title="Diego Ribeiro" // Update this with your name or a dynamic value
-            subheader={new Date(item.date).toLocaleDateString("pt-BR")}
-          />
-          <Divider variant="fullWidth" />
-          <CardMedia
-            component="img"
-            height="194"
-            image="https://images.unsplash.com/photo-1676816823266-a8bb9a998de7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1332&q=80"
-            alt="Paella dish"
-          />
-          <CardContent>
-            <Typography
-              component={"div"}
-              variant="body2"
-              color="text.secondary"
-            >
-              {item.content.split("\n").map((paragraph, index) => (
-                <p key={index}>{paragraph}</p>
-              ))}
-            </Typography>
-          </CardContent>
-        </Card>
-      ))}
-    </div>
-  );
+  return newsData.map((item: News) => (
+    <Card key={item.id} sx={{ maxWidth: 900, marginBottom: 3 }}>
+      <CardHeader
+        avatar={
+          <Avatar sx={{ bgcolor: red[500] }} aria-label="user">
+            D
+          </Avatar>
+        }
+        title="Diego Ribeiro" // Update this with your name or a dynamic value
+        subheader={new Date(item.date).toLocaleDateString("pt-BR")}
+      />
+      <Divider variant="fullWidth" />
+      <CardMedia
+        component="img"
+        height="194"
+        image="https://images.unsplash.com/photo-1676816823266-a8bb9a998de7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1332&q=80"
+        alt="Paella dish"
+      />
+      <CardContent>
+        <Typography component={"div"} variant="body2" color="text.secondary">
+          {item.content.split("\n").map((paragraph, index) => (
+            <p key={index}>{paragraph}</p>
+          ))}
+        </Typography>
+      </CardContent>
+    </Card>
+  ));
 }

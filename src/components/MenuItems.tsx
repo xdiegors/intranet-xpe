@@ -4,12 +4,18 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
-export default function MenuItems({ title }) {
+export default function MenuItems({ title, onSelectMenuItem }) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
+  const handleMenuItemClick = (event, optionText) => {
+    onSelectMenuItem(optionText); // Pass the selected option text to the parent
+    setAnchorEl(null);
+  };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -36,9 +42,15 @@ export default function MenuItems({ title }) {
           "aria-labelledby": "basic-button",
         }}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
+        <MenuItem onClick={(event) => handleMenuItemClick(event, "Profile")}>
+          Profile
+        </MenuItem>
+        <MenuItem onClick={(event) => handleMenuItemClick(event, "My account")}>
+          My account
+        </MenuItem>
+        <MenuItem onClick={(event) => handleMenuItemClick(event, "Logout")}>
+          Logout
+        </MenuItem>
       </Menu>
     </>
   );
