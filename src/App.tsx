@@ -10,18 +10,23 @@ import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import ptBR from "date-fns/locale/pt-BR";
 
 function App() {
   return (
-    <Router>
-      <CssBaseline />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/gerenciamento" element={<ContentManagement />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </Router>
+    <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ptBR}>
+      <Router>
+        <CssBaseline />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/gerenciamento" element={<ContentManagement />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Router>
+    </LocalizationProvider>
   );
 }
 
