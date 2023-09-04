@@ -42,14 +42,17 @@ export default function MenuItems({ title, onSelectMenuItem }) {
           "aria-labelledby": "basic-button",
         }}
       >
-        <MenuItem onClick={(event) => handleMenuItemClick(event, "Profile")}>
-          Profile
+        <MenuItem onClick={(event) => handleMenuItemClick(event, "Eventos")}>
+          Eventos
         </MenuItem>
-        <MenuItem onClick={(event) => handleMenuItemClick(event, "My account")}>
-          My account
+        <MenuItem onClick={(event) => handleMenuItemClick(event, "Notícias")}>
+          Notícias
         </MenuItem>
-        <MenuItem onClick={(event) => handleMenuItemClick(event, "Logout")}>
-          Logout
+        <MenuItem onClick={(event) => handleMenuItemClick(event, "Cardápio")}>
+          Cardápio
+        </MenuItem>
+        <MenuItem onClick={(event) => handleMenuItemClick(event, "Documentos")}>
+          Documentos
         </MenuItem>
       </Menu>
     </>

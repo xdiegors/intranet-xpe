@@ -11,6 +11,7 @@ import MenuItems from "../components/MenuItems";
 import { useState, useEffect } from "react";
 import Modal from "@mui/material/Modal";
 import { DatePicker } from "@mui/x-date-pickers";
+import AddFile from "../components/AddFile";
 
 const handleEdit = (index) => {
   // Handle edit action here
@@ -50,20 +51,25 @@ export default function ContentManagement() {
     console.log("Selected Option:", optionText);
 
     switch (optionText) {
-      case "Profile":
+      case "Eventos":
         setFirstColumn("date");
         setSecondColumn("name");
         setfetchLocation("events");
         break;
-      case "My account":
+      case "Notícias":
         setFirstColumn("content");
         setSecondColumn("date");
         setfetchLocation("news");
         break;
-      case "Logout":
+      case "Cardápio":
         setFirstColumn("dish1");
         setSecondColumn("date");
         setfetchLocation("food");
+        break;
+      case "Documentos":
+        setFirstColumn("dish1");
+        setSecondColumn("date");
+        setfetchLocation("documents");
         break;
       default:
         break;
@@ -91,18 +97,16 @@ export default function ContentManagement() {
       method: "POST",
       headers: new Headers({
         Authorization: `Basic ${btoa(`${username}:${password}`)}`,
-        "Content-Type": "application/json", // Set the content type to JSON
+        "Content-Type": "application/json",
       }),
-      body: JSON.stringify(payload), // Convert payload to JSON string
+      body: JSON.stringify(payload),
     })
       .then((response) => {
         if (response.ok) {
-          // Handle success, e.g., show a success message
-          console.log("Post request successful");
-          handleClose(); // Close the modal after successful submission
+          console.log("Post successful");
+          handleClose();
         } else {
-          // Handle errors, e.g., show an error message
-          console.error("Post request failed");
+          console.error("Post failed");
         }
       })
       .catch((error) => {
@@ -168,7 +172,7 @@ export default function ContentManagement() {
               onSelectMenuItem={handleSelectedOption}
             />
           </Box>
-          {selectedOption && (
+          {selectedOption != "Documentos" && (
             <>
               <Button
                 variant="contained"
@@ -186,6 +190,7 @@ export default function ContentManagement() {
               />
             </>
           )}
+          {selectedOption === "Documentos" && <AddFile />}
         </Box>
         <Modal
           open={open}
