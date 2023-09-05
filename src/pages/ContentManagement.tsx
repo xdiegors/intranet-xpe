@@ -13,18 +13,18 @@ import Modal from "@mui/material/Modal";
 import { DatePicker } from "@mui/x-date-pickers";
 import AddFile from "../components/AddFile";
 
-const handleEdit = (index) => {
+const handleEdit = (index: string) => {
   // Handle edit action here
   console.log(`Edit item at index ${index}`);
 };
 
-const handleDelete = (index) => {
+const handleDelete = (index: string) => {
   // Handle delete action here
   console.log(`Delete item at index ${index}`);
 };
 
 const style = {
-  position: "absolute" as "absolute",
+  position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
@@ -170,6 +170,7 @@ export default function ContentManagement() {
             <MenuItems
               title={selectedOption || "Selecione"}
               onSelectMenuItem={handleSelectedOption}
+              items={["Eventos", "Notícias", "Cardápio", "Documentos"]}
             />
           </Box>
           {selectedOption != "Documentos" && (

@@ -10,10 +10,10 @@ export default function Menu() {
       <AppBar position="static" sx={{ backgroundColor: "black" }}>
         <Toolbar>
           <Container sx={{ flexWrap: "wrap", flexDirection: "row" }}>
-            <MenuItems title="Sobre a empresa" />
-            <MenuItems title="Documentos" />
-            <MenuItems title="Procedimentos" />
-            <MenuItems title="Formulários" />
+            <MenuItems title="Sobre a empresa" items={["Lojas", "História"]} />
+            <MenuItems title="Documentos" items={["teste", "teste 2"]} />
+            <MenuItems title="Procedimentos" items={["teste", "teste 2"]} />
+            <MenuItems title="Formulários" items={["teste", "teste 2"]} />
           </Container>
         </Toolbar>
       </AppBar>
