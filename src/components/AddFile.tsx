@@ -15,15 +15,15 @@ const AddFile = () => {
       const formData = new FormData();
       formData.append("file", file);
 
-      const username = "admin"; // Replace with your username
-      const password = "desafio"; // Replace with your password
-      const base64Credentials = btoa(`${username}:${password}`);
+      // const username = "admin"; // Replace with your username
+      // const password = "desafio"; // Replace with your password
+      // const base64Credentials = btoa(`${username}:${password}`);
 
       try {
         await axios.post("/documents", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
-            Authorization: `Basic ${base64Credentials}`,
+            // Authorization: `Basic ${base64Credentials}`,
           },
         });
         alert("File uploaded successfully.");
