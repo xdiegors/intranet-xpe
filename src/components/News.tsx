@@ -7,6 +7,8 @@ import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
 import Divider from "@mui/material/Divider";
 import { useEffect, useState } from "react";
+import authHeader from "../services/AuthHeader";
+import axios from "axios";
 
 interface News {
   id: number;
@@ -18,19 +20,17 @@ export default function News() {
   const [newsData, setNewsData] = useState(Array<News>);
 
   useEffect(() => {
-    // Basic Authentication credentials
-    const username = "admin";
-    const password = "desafio";
-
-    // Fetch data from the API with Basic Authentication
-    fetch("http://localhost:3000/news", {
-      headers: new Headers({
-        Authorization: `Basic ${btoa(`${username}:${password}`)}`,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => setNewsData(data))
-      .catch((error) => console.error("Error fetching data:", error));
+    axios
+      .get("http://localhost:3000/news", {
+        headers: authHeader(),
+      })
+      .then((response) => {
+        // Axios already parses JSON responses, so you can directly access the data property.
+        setNewsData(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
   }, []);
 
   return newsData.map((item: News) => (

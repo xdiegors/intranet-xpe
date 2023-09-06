@@ -115,15 +115,8 @@ export default function ContentManagement() {
   };
 
   useEffect(() => {
-    const username = "admin";
-    const password = "desafio";
-
     // Fetch data from the API with Basic Authentication
-    fetch(`http://localhost:3000/${fetchLocation}`, {
-      headers: new Headers({
-        Authorization: `Basic ${btoa(`${username}:${password}`)}`,
-      }),
-    })
+    fetch(`http://localhost:3000/${fetchLocation}`)
       .then((response) => response.json())
       .then((data) => setData(data))
       .catch((error) => console.error("Error fetching data:", error));

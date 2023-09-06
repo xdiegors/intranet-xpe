@@ -1,3 +1,4 @@
+import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -10,9 +11,6 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Image from "../assets/images/login-background.jpg";
-import { useState } from "react";
-import AuthService from "../services/AuthService";
-import { useNavigate } from "react-router-dom";
 
 function Copyright(props: any) {
   return (
@@ -33,34 +31,13 @@ function Copyright(props: any) {
 const defaultTheme = createTheme();
 
 export default function SignInSide() {
-  const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const navigate = useNavigate();
-
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    try {
-      // Attempt to login using AuthService
-      const token = await AuthService.login(name, password);
-
-      // If login is successful, you can handle it accordingly
-      if (token) {
-        // Redirect to the desired page or update your UI
-        console.log("Login successful");
-        console.log(AuthService.getToken());
-        //  navigate("/gerenciamento");
-      } else {
-        // Handle login failure (e.g., show an error message)
-        setError("Login failed");
-      }
-    } catch (error) {
-      console.error("Error during login:", error);
-      // Handle other errors as needed
-    } finally {
-      console.log(`name: ${name}, password: ${password}`);
-    }
+    const data = new FormData(event.currentTarget);
+    console.log({
+      email: data.get("email"),
+      password: data.get("password"),
+    });
   };
 
   return (
@@ -109,12 +86,11 @@ export default function SignInSide() {
                 margin="normal"
                 required
                 fullWidth
-                id="name"
+                id="email"
                 label="Usuário"
-                name="name"
-                autoComplete="name"
+                name="email"
+                autoComplete="email"
                 autoFocus
-                onChange={(e) => setName(e.target.value)}
               />
               <TextField
                 margin="normal"
@@ -125,7 +101,6 @@ export default function SignInSide() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                onChange={(e) => setPassword(e.target.value)}
               />
               <Button
                 type="submit"
