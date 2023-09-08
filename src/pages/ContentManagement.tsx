@@ -12,6 +12,7 @@ import { useState, useEffect } from "react";
 import Modal from "@mui/material/Modal";
 import { DatePicker } from "@mui/x-date-pickers";
 import AddFile from "../components/AddFile";
+import axios from "axios";
 
 const handleEdit = (index: string) => {
   // Handle edit action here
@@ -19,8 +20,17 @@ const handleEdit = (index: string) => {
 };
 
 const handleDelete = (index: string) => {
-  // Handle delete action here
-  console.log(`Delete item at index ${index}`);
+  console.log(index);
+
+  axios
+    .delete(`http://localhost:3000/${fetchLocation}/${index}`)
+    .then((response) => {
+      // Axios already parses JSON responses, so you can directly access the data property.
+      console.error(response);
+    })
+    .catch((error) => {
+      console.error("Error deleting data:", error);
+    });
 };
 
 const style = {
@@ -90,36 +100,26 @@ export default function ContentManagement() {
     };
 
     // Make the POST request
-    const username = "admin";
-    const password = "desafio";
-
-    fetch(`http://localhost:3000/news`, {
-      method: "POST",
-      headers: new Headers({
-        Authorization: `Basic ${btoa(`${username}:${password}`)}`,
-        "Content-Type": "application/json",
-      }),
-      body: JSON.stringify(payload),
-    })
-      .then((response) => {
-        if (response.ok) {
-          console.log("Post successful");
-          handleClose();
-        } else {
-          console.error("Post failed");
-        }
+    axios
+      .post("http://localhost:3000/news", payload)
+      .then(function (response) {
+        console.log(response);
       })
-      .catch((error) => {
-        console.error("Error posting data:", error);
+      .catch(function (error) {
+        console.log(error);
       });
   };
 
   useEffect(() => {
-    // Fetch data from the API with Basic Authentication
-    fetch(`http://localhost:3000/${fetchLocation}`)
-      .then((response) => response.json())
-      .then((data) => setData(data))
-      .catch((error) => console.error("Error fetching data:", error));
+    axios
+      .get(`http://localhost:3000/${fetchLocation}`)
+      .then((response) => {
+        // Axios already parses JSON responses, so you can directly access the data property.
+        setData(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
   }, [fetchLocation]);
 
   return (

@@ -1,4 +1,3 @@
-import * as React from "react";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -7,6 +6,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 interface Food {
   _id: string;
@@ -21,19 +21,15 @@ export default function FoodMenu() {
   const [foodData, setFoodData] = useState<Food>();
 
   useEffect(() => {
-    // Basic Authentication credentials
-    const username = "admin";
-    const password = "desafio";
-
-    // Fetch data from the API with Basic Authentication
-    fetch("http://localhost:3000/food", {
-      headers: new Headers({
-        Authorization: `Basic ${btoa(`${username}:${password}`)}`,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => setFoodData(data[0])) // Fetching the first item from the array
-      .catch((error) => console.error("Error fetching data:", error));
+    axios
+      .get("http://localhost:3000/food")
+      .then((response) => {
+        // Axios already parses JSON responses, so you can directly access the data property.
+        setFoodData(response.data[0]);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
   }, []);
 
   return (

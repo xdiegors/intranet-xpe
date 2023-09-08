@@ -50,7 +50,7 @@ const GridComponent = ({
                   <Button
                     variant="contained"
                     color="error"
-                    onClick={() => onDelete?.("teste")}
+                    onClick={() => onDelete?.(item)}
                   >
                     Excluir
                   </Button>

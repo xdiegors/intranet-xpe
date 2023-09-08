@@ -5,6 +5,7 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import axios from "axios";
 import { useEffect, useState } from "react";
 
 interface Events {
@@ -17,19 +18,15 @@ export default function Events() {
   const [eventsData, setEventsData] = useState([]);
 
   useEffect(() => {
-    // Basic Authentication credentials
-    const username = "admin";
-    const password = "desafio";
-
-    // Fetch data from the API with Basic Authentication
-    fetch("http://localhost:3000/events", {
-      headers: new Headers({
-        Authorization: `Basic ${btoa(`${username}:${password}`)}`,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => setEventsData(data))
-      .catch((error) => console.error("Error fetching data:", error));
+    axios
+      .get("http://localhost:3000/events")
+      .then((response) => {
+        // Axios already parses JSON responses, so you can directly access the data property.
+        setEventsData(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
   }, []);
 
   return (
