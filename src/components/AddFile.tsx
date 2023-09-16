@@ -1,10 +1,25 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
+import FileList from "./FileList";
 
 axios.defaults.baseURL = "http://localhost:3000";
 
 const AddFile = () => {
   const [file, setFile] = useState(null);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("/documents")
+      .then((response) => {
+        // Axios already parses JSON responses, so you can directly access the data property.
+
+        setData(response.data.files);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -35,6 +50,7 @@ const AddFile = () => {
     <div>
       <input type="file" onChange={handleFileChange} name="file" />
       <button onClick={handleUpload}>Enviar</button>
+      <FileList files={data} />
     </div>
   );
 };

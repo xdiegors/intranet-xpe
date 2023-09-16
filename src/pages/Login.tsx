@@ -50,7 +50,7 @@ export default function SignInSide() {
         // Redirect to the desired page or update your UI
         console.log("Login successful");
         console.log(AuthService.getToken());
-        //  navigate("/gerenciamento");
+        navigate("/gerenciamento");
       } else {
         // Handle login failure (e.g., show an error message)
         setError("Login failed");

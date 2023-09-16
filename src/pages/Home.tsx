@@ -1,5 +1,4 @@
 import Menu from "../components/Menu";
-import SearchBar from "../components/SearchBar";
 import Box from "@mui/material/Box";
 
 import News from "../components/News";
@@ -10,6 +9,7 @@ import { brown } from "@mui/material/colors";
 import Footer from "../components/Footer";
 import Container from "@mui/material/Container";
 import Events from "../components/Events";
+import Header from "../components/Header";
 
 export default function Home() {
   return (
@@ -20,22 +20,7 @@ export default function Home() {
         paddingTop: 1,
       }}
     >
-      <Container
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          flexWrap: "wrap",
-        }}
-      >
-        <img
-          src="/src/assets/images/logo.png"
-          alt=""
-          width={200}
-          height={100}
-        />
-        <SearchBar />
-      </Container>
+      <Header />
       <Menu />
       <Container
         sx={{

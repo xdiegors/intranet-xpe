@@ -3,7 +3,6 @@ import { brown } from "@mui/material/colors";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import Menu from "../components/Menu";
-import SearchBar from "../components/SearchBar";
 import Footer from "../components/Footer";
 import GridComponent from "../components/GridComponent";
 import { Stack, TextField, Typography } from "@mui/material";
@@ -13,24 +12,11 @@ import Modal from "@mui/material/Modal";
 import { DatePicker } from "@mui/x-date-pickers";
 import AddFile from "../components/AddFile";
 import axios from "axios";
+import Header from "../components/Header";
 
 const handleEdit = (index: string) => {
   // Handle edit action here
   console.log(`Edit item at index ${index}`);
-};
-
-const handleDelete = (index: string) => {
-  console.log(index);
-
-  axios
-    .delete(`http://localhost:3000/${fetchLocation}/${index}`)
-    .then((response) => {
-      // Axios already parses JSON responses, so you can directly access the data property.
-      console.error(response);
-    })
-    .catch((error) => {
-      console.error("Error deleting data:", error);
-    });
 };
 
 const style = {
@@ -55,6 +41,21 @@ export default function ContentManagement() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [content, setContent] = useState("");
+  const [date, setDate] = useState(new Date());
+
+  const handleDelete = (fetchLocation: string, index: string) => {
+    console.log(index);
+
+    axios
+      .delete(`http://localhost:3000/${fetchLocation}/${index}`)
+      .then((response) => {
+        // Axios already parses JSON responses, so you can directly access the data property.
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error("Error deleting data:", error);
+      });
+  };
 
   const handleSelectedOption = (optionText: string) => {
     setSelectedOption(optionText);
@@ -87,16 +88,16 @@ export default function ContentManagement() {
   };
 
   const handleSave = () => {
-    // Use the content state to get the content value
-    const contentValue = content;
+    // // Use the content state to get the content value
+    // const contentValue = content;
 
-    // Get the selected date from your DatePicker component
-    const selectedDate = new Date(); // Replace with the actual selected date
+    // // Get the selected date from your DatePicker component
+    // const selectedDate = date; // Replace with the actual selected date
 
     // Create a payload with the data
     const payload = {
-      content: contentValue,
-      date: selectedDate.toISOString(), // Convert date to ISO string format
+      content: content,
+      date: date.toISOString(), // Convert date to ISO string format
     };
 
     // Make the POST request
@@ -108,6 +109,9 @@ export default function ContentManagement() {
       .catch(function (error) {
         console.log(error);
       });
+
+    handleClose();
+    setContent("");
   };
 
   useEffect(() => {
@@ -120,7 +124,7 @@ export default function ContentManagement() {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, [fetchLocation]);
+  }, [fetchLocation, data]);
 
   return (
     <Box
@@ -130,22 +134,7 @@ export default function ContentManagement() {
         paddingTop: 1,
       }}
     >
-      <Container
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          flexWrap: "wrap",
-        }}
-      >
-        <img
-          src="/src/assets/images/logo.png"
-          alt=""
-          width={200}
-          height={100}
-        />
-        <SearchBar />
-      </Container>
+      <Header />
       <Menu />
       <Container
         sx={{
@@ -181,6 +170,7 @@ export default function ContentManagement() {
                 secondColumnName={secondColumn}
                 onDelete={handleDelete}
                 onEdit={handleEdit}
+                location={fetchLocation}
               />
             </>
           )}
@@ -207,13 +197,14 @@ export default function ContentManagement() {
               value={content}
               onChange={(e) => setContent(e.target.value)}
             />
-            <DatePicker />
+            <DatePicker onChange={(newValue) => setDate(newValue)} />
             <Stack direction="row" spacing={2} marginTop={2}>
               <Button
                 type="submit"
                 variant="contained"
                 color="warning"
                 sx={{ mt: 3, mb: 2 }}
+                onClick={handleClose}
               >
                 Cancelar
               </Button>

@@ -11,7 +11,7 @@ import authHeader from "../services/AuthHeader";
 import axios from "axios";
 
 interface News {
-  id: number;
+  _id: string;
   content: string;
   date: Date;
 }
@@ -21,9 +21,7 @@ export default function News() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/news", {
-        headers: authHeader(),
-      })
+      .get("http://localhost:3000/news")
       .then((response) => {
         // Axios already parses JSON responses, so you can directly access the data property.
         setNewsData(response.data);
@@ -34,7 +32,7 @@ export default function News() {
   }, []);
 
   return newsData.map((item: News) => (
-    <Card key={item.id} sx={{ maxWidth: 900, marginBottom: 3 }}>
+    <Card key={item._id} sx={{ maxWidth: 900, marginBottom: 3 }}>
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label="user">
