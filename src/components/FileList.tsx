@@ -7,9 +7,33 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import React from "react";
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 const FileList = ({ files }) => {
+  const [fileList, setFileList] = useState(files);
+
+  useEffect(() => {
+    setFileList(files);
+  }, [files]);
+
+  const handleDelete = (file) => {
+    console.log(`O arquivo a seguir foi excluído: ${file}`);
+
+    axios
+      .delete(`http://localhost:3000/documents/${file}`)
+      .then((response) => {
+        // Axios already parses JSON responses, so you can directly access the data property.
+        console.log(response);
+
+        // Update the file list by removing the deleted file
+        setFileList((prevFiles) => prevFiles.filter((f) => f !== file));
+      })
+      .catch((error) => {
+        console.error("Error deleting data:", error);
+      });
+  };
+
   return (
     <Paper>
       <TableContainer>
@@ -17,28 +41,28 @@ const FileList = ({ files }) => {
           <TableHead>
             <TableRow>
               <TableCell>Arquivo</TableCell>
-              {/* {secondColumnName && <TableCell> {secondColumnName}</TableCell>} */}
               <TableCell>Ações</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {files.map((file, index) => (
+            {fileList.map((file, index) => (
               <TableRow key={index}>
                 <TableCell>{file}</TableCell>
                 <TableCell>
                   <Stack direction="row" spacing={2} marginTop={2}>
-                    <Button
+                    {/* You can add an Edit button if needed */}
+                    {/* <Button
                       variant="contained"
                       color="primary"
                       onClick={() => onEdit?.("teste")}
                       sx={{ marginRight: 1 }}
                     >
                       Editar
-                    </Button>
+                    </Button> */}
                     <Button
                       variant="contained"
                       color="error"
-                      onClick={() => onDelete?.(location, item._id)}
+                      onClick={() => handleDelete(file)}
                     >
                       Excluir
                     </Button>

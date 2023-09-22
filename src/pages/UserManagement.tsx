@@ -31,20 +31,16 @@ const style = {
   p: 4,
 };
 
-export default function ContentManagement() {
+export default function UserManagement() {
   const [data, setData] = useState([]);
-  const [selectedOption, setSelectedOption] = useState("");
-  const [firstColumn, setFirstColumn] = useState("");
-  const [secondColumn, setSecondColumn] = useState("");
-  const [fetchLocation, setfetchLocation] = useState("");
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [content, setContent] = useState("");
-  const [date, setDate] = useState(new Date());
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleDelete = (fetchLocation: string, index: string) => {
-    console.log(index);
+    console.log(name);
 
     axios
       .delete(`http://localhost:3000/${fetchLocation}/${index}`)
@@ -54,54 +50,17 @@ export default function ContentManagement() {
       .catch((error) => {
         console.error("Error deleting data:", error);
       });
-  };
-
-  const handleSelectedOption = (optionText: string) => {
-    setSelectedOption(optionText);
-    console.log("Selected Option:", optionText);
-
-    switch (optionText) {
-      case "Eventos":
-        setFirstColumn("date");
-        setSecondColumn("name");
-        setfetchLocation("events");
-        break;
-      case "Notícias":
-        setFirstColumn("content");
-        setSecondColumn("date");
-        setfetchLocation("news");
-        break;
-      case "Cardápio":
-        setFirstColumn("dish1");
-        setSecondColumn("date");
-        setfetchLocation("food");
-        break;
-      case "Documentos":
-        setFirstColumn("dish1");
-        setSecondColumn("date");
-        setfetchLocation("documents");
-        break;
-      default:
-        break;
-    }
+    setName("");
   };
 
   const handleSave = () => {
-    // // Use the content state to get the content value
-    // const contentValue = content;
-
-    // // Get the selected date from your DatePicker component
-    // const selectedDate = date; // Replace with the actual selected date
-
-    // Create a payload with the data
     const payload = {
-      content: content,
-      date: date.toISOString(), // Convert date to ISO string format
+      name: name,
+      password: password,
     };
 
-    // Make the POST request
     axios
-      .post("http://localhost:3000/news", payload)
+      .post("http://localhost:3000/users", payload)
       .then(function (response) {
         console.log(response);
       })
@@ -110,12 +69,13 @@ export default function ContentManagement() {
       });
 
     handleClose();
-    setContent("");
+    setName("");
+    setPassword("");
   };
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/${fetchLocation}`)
+      .get("http://localhost:3000/users")
       .then((response) => {
         // Axios already parses JSON responses, so you can directly access the data property.
         setData(response.data);
@@ -123,7 +83,7 @@ export default function ContentManagement() {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, [fetchLocation, data]);
+  }, [name, data]);
 
   return (
     <Box
@@ -144,36 +104,22 @@ export default function ContentManagement() {
         }}
       >
         <Box>
-          <Box marginBottom={3}>
-            <Typography variant="h2" fontSize={30}>
-              Gerenciar:
-            </Typography>
-            <MenuItems
-              title={selectedOption || "Selecione"}
-              onSelectMenuItem={handleSelectedOption}
-              items={["Eventos", "Notícias", "Cardápio", "Documentos"]}
+          <>
+            <Button
+              variant="contained"
+              sx={{ marginBottom: 1 }}
+              onClick={handleOpen}
+            >
+              Adicionar novo
+            </Button>
+            <GridComponent
+              data={data}
+              firstColumnName="name"
+              onDelete={handleDelete}
+              onEdit={handleEdit}
+              location="users"
             />
-          </Box>
-          {selectedOption != "Documentos" && (
-            <>
-              <Button
-                variant="contained"
-                sx={{ marginBottom: 1 }}
-                onClick={handleOpen}
-              >
-                Adicionar novo
-              </Button>
-              <GridComponent
-                data={data}
-                firstColumnName={firstColumn}
-                secondColumnName={secondColumn}
-                onDelete={handleDelete}
-                onEdit={handleEdit}
-                location={fetchLocation}
-              />
-            </>
-          )}
-          {selectedOption === "Documentos" && <AddFile />}
+          </>
         </Box>
         <Modal
           open={open}
@@ -186,17 +132,24 @@ export default function ContentManagement() {
               margin="normal"
               required
               fullWidth
-              id="content"
-              label="Conteúdo"
-              name="content"
-              autoComplete="content"
+              id="name"
+              label="Usuário"
+              name="name"
+              autoComplete="name"
               autoFocus
-              multiline
-              rows={10}
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
+              onChange={(e) => setName(e.target.value)}
             />
-            <DatePicker onChange={(newValue) => setDate(newValue)} />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Senha"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
             <Stack direction="row" spacing={2} marginTop={2}>
               <Button
                 type="submit"

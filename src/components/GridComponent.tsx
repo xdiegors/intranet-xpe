@@ -6,6 +6,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Button from "@mui/material/Button";
 import { Paper, Stack } from "@mui/material";
+import formatDate from "../helpers/formatDate";
 
 interface IGridComponent {
   firstColumnName: string;
@@ -39,9 +40,17 @@ const GridComponent = ({
             {data.length > 0 &&
               data.map((item, index) => (
                 <TableRow key={item._id ? item._id : index}>
-                  <TableCell>{item[firstColumnName]}</TableCell>
+                  <TableCell>
+                    {firstColumnName === "date"
+                      ? formatDate(item[firstColumnName])
+                      : item[firstColumnName]}
+                  </TableCell>
                   {secondColumnName && (
-                    <TableCell>{item[secondColumnName]}</TableCell>
+                    <TableCell>
+                      {secondColumnName === "date"
+                        ? formatDate(item[secondColumnName])
+                        : item[secondColumnName]}
+                    </TableCell>
                   )}
                   <TableCell>
                     <Stack direction="row" spacing={2} marginTop={2}>

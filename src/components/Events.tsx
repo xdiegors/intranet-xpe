@@ -7,6 +7,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import formatDate from "../helpers/formatDate";
 
 interface Events {
   _id: string;
@@ -48,7 +49,7 @@ export default function Events() {
             {eventsData.map((row: Events) => (
               <TableRow key={row._id} hover role="checkbox" tabIndex={-1}>
                 <TableCell>{row.name}</TableCell>
-                <TableCell>{row.date}</TableCell>
+                <TableCell>{formatDate(row.date)}</TableCell>
               </TableRow>
             ))}
           </TableBody>

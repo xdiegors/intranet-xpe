@@ -13,6 +13,7 @@ import "@fontsource/roboto/700.css";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import ptBR from "date-fns/locale/pt-BR";
+import UserManagement from "./pages/UserManagement";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/gerenciamento" element={<ContentManagement />} />
+          <Route path="/usuarios" element={<UserManagement />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>

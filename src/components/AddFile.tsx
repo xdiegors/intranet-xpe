@@ -19,7 +19,7 @@ const AddFile = () => {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, []);
+  }, [data]);
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
