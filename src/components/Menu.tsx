@@ -7,7 +7,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 
 export default function Menu() {
-  const [data, setData] = useState([]);
+  const [documents, setDocuments] = useState([]);
 
   useEffect(() => {
     axios
@@ -15,12 +15,12 @@ export default function Menu() {
       .then((response) => {
         // Axios already parses JSON responses, so you can directly access the data property.
 
-        setData(response.data.files);
+        setDocuments(response.data.files);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, [data]);
+  }, []);
 
   return (
     <Box sx={{ flexGrow: 1 }} marginTop={1} marginBottom={1}>
@@ -28,7 +28,7 @@ export default function Menu() {
         <Toolbar>
           <Container sx={{ flexWrap: "wrap", flexDirection: "row" }}>
             <MenuItems title="Sobre a empresa" items={["Lojas", "História"]} />
-            <MenuItems title="Documentos" items={data} />
+            <MenuItems title="Documentos" items={documents} canDownload />
             <MenuItems title="Procedimentos" items={["teste", "teste 2"]} />
             <MenuItems title="Formulários" items={["teste", "teste 2"]} />
           </Container>

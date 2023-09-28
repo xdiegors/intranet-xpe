@@ -56,7 +56,7 @@ export default function Footer() {
           <Button
             color="warning"
             onClick={handleLogout}
-            endIcon={<LogoutIcon />}
+            startIcon={<LogoutIcon />}
             variant="contained"
           >
             Sair
@@ -65,7 +65,7 @@ export default function Footer() {
           <Button
             color="primary"
             onClick={handleLogin}
-            endIcon={<LoginIcon />}
+            startIcon={<LoginIcon />}
             variant="contained"
           >
             Entrar

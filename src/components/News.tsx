@@ -7,7 +7,6 @@ import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
 import Divider from "@mui/material/Divider";
 import { useEffect, useState } from "react";
-import authHeader from "../services/AuthHeader";
 import axios from "axios";
 
 interface News {

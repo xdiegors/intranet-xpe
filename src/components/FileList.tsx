@@ -9,6 +9,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import authHeader from "../services/AuthHeader";
 
 const FileList = ({ files }) => {
   const [fileList, setFileList] = useState(files);
@@ -21,7 +22,9 @@ const FileList = ({ files }) => {
     console.log(`O arquivo a seguir foi excluído: ${file}`);
 
     axios
-      .delete(`http://localhost:3000/documents/${file}`)
+      .delete(`http://localhost:3000/documents/${file}`, {
+        headers: authHeader(),
+      })
       .then((response) => {
         // Axios already parses JSON responses, so you can directly access the data property.
         console.log(response);

@@ -13,6 +13,7 @@ import { DatePicker } from "@mui/x-date-pickers";
 import AddFile from "../components/AddFile";
 import axios from "axios";
 import Header from "../components/Header";
+import authHeader from "../services/AuthHeader";
 
 const handleEdit = (index: string) => {
   // Handle edit action here
@@ -41,17 +42,17 @@ export default function ContentManagement() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [content, setContent] = useState("");
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState<Date | null>(new Date());
 
   const handleDelete = (fetchLocation: string, index: string) => {
     console.log(index);
 
     axios
-      .delete(`http://localhost:3000/${fetchLocation}/${index}`)
-      .then((response) => {
+      .delete(`http://localhost:3000/${fetchLocation}/${index}`, {
+        headers: authHeader(),
+      }).then((response) => {
         console.log(response);
-      })
-      .catch((error) => {
+      }).catch((error) => {
         console.error("Error deleting data:", error);
       });
   };
@@ -96,7 +97,7 @@ export default function ContentManagement() {
     // Create a payload with the data
     const payload = {
       content: content,
-      date: date.toISOString(), // Convert date to ISO string format
+      date: date?.toISOString(), // Convert date to ISO string format
     };
 
     // Make the POST request
@@ -196,7 +197,9 @@ export default function ContentManagement() {
               value={content}
               onChange={(e) => setContent(e.target.value)}
             />
-            <DatePicker onChange={(newValue) => setDate(newValue)} />
+            <DatePicker
+              onChange={(newValue: Date | null) => setDate(newValue)}
+            />
             <Stack direction="row" spacing={2} marginTop={2}>
               <Button
                 type="submit"
